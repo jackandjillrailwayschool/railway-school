@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fee Collection | JACK AND JILL SCHOOL</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                🚂 JACK AND JILL SCHOOL Admin
+            </div>
+            <nav class="nav-links" id="sidebarNav">
+                <a class="nav-item active">Fee Collection</a>
+                <a class="nav-item" id="backToDashboard" style="display:none;" onclick="window.location.href='dashboard.html'">← Back to Dashboard</a>
+            </nav>
+            <div class="sidebar-logout">
+                <a onclick="logout()">🚪 Logout</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <h2 id="viewTitle">Fee Collection</h2>
+                <div class="user-info">
+                    <span id="userRoleBadge" style="background: var(--accent); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem;"></span>
+                    <strong id="headerUserName">Admin</strong>
+                </div>
+            </header>
+
+            <div id="content" class="content-area">
+                <div class="card">
+                    <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:20px; background:#f1f5f9; padding:14px; border-radius:8px;">
+                        <input type="text" id="regSearch" onkeyup="applyFilters()" placeholder="Search by Name/Reg..." 
+                            style="flex:1; min-width:180px; padding:10px; border-radius:6px; border:1px solid #ddd;">
+                        <select id="classFilter" onchange="applyFilters()" style="padding:10px; border-radius:6px; border:1px solid #ddd; background:#fff; font-size:14px;">
+                            <option value="">All Classes</option>
+                        </select>
+                        <select id="sectionFilter" onchange="applyFilters()" style="padding:10px; border-radius:6px; border:1px solid #ddd; background:#fff; font-size:14px;">
+                            <option value="">All Sections</option>
+                            <option>A</option><option>B</option><option>C</option>
+                            <option>D</option><option>E</option><option>F</option>
+                        </select>
+                        <button class="btn-primary" style="width:auto; padding:10px 20px;" onclick="openFeeModal()">+ Add Fee Record</button>
+                    </div>
+                    <div id="feeTableWrapper"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content" id="modalBody"></div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/fees.js"></script>
+</body>
+</html>

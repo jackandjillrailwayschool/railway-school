@@ -1,0 +1,211 @@
+:root {
+    --primary: #2c3e50;
+    --accent: #3498db;
+    --bg: #f4f7f6;
+    --white: #ffffff;
+}
+
+body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; display: flex; }
+.container { display: flex; width: 100%; height: 100vh; }
+
+.sidebar { 
+    width: 260px; 
+    background: var(--primary); 
+    color: white; 
+    padding: 20px; 
+    transition: 0.3s; 
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#sidebarNav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.sidebar ul { list-style: none; padding: 0; }
+.sidebar li { padding: 15px; cursor: pointer; border-radius: 8px; margin-bottom: 5px; transition: 0.3s; }
+.sidebar li:hover { background: var(--accent); }
+
+.content { flex: 1; padding: 30px; overflow-y: auto; }
+.glass-card { background: var(--white); padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+
+.topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+
+/* Table Styling */
+table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+th { text-align: left; background: #f8f9fa; padding: 12px; border-bottom: 2px solid #eee; }
+td { padding: 12px; border-bottom: 1px solid #eee; }
+.profile-item label::after {
+    content: " :";
+}
+.action-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+}
+.action-btn.view { background: #233d91; color: white; }
+.action-btn.delete:hover { background: #ff1f30; }
+
+@media print {
+    .no-print { display: none !important; }
+    .sidebar, .header { display: none !important; }
+}
+/* PROFESSIONAL PRINT ENGINE */
+@media print {
+    /* 1. Hide everything on the page */
+    body * {
+        visibility: hidden;
+    }
+
+    /* 2. Only show the print area and its children */
+    #printArea, #printArea * {
+        visibility: visible;
+    }
+
+    /* 3. Position the print area at the very top-left of the paper */
+    #printArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* 4. Hide the Print/Close buttons so they don't appear on paper */
+    .no-print {
+        display: none !important;
+    }
+
+    /* 5. Clean up the page (no headers/footers from browser) */
+    @page {
+        margin: 1cm;
+    }
+}
+/* Profile Modal */
+#printArea { padding: 20px; font-family: Arial, sans-serif; }
+
+/* ── Modal Profile View ── */
+#modal .modal-content {
+    max-width: 700px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 10px;
+    padding: 0;
+}
+
+.print-header { text-align: center; padding: 20px 20px 12px; border-bottom: 3px double #233d91; }
+.print-header h2 { font-size: 20px; color: #233d91; letter-spacing: 1px; margin: 0; }
+.print-header p  { font-size: 12px; color: #777; margin-top: 4px; }
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    padding: 16px;
+}
+
+.profile-row {
+    display: flex;
+    flex-direction: column;
+    background: #f7f9fc;
+    border-left: 3px solid #233d91;
+    border-radius: 4px;
+    padding: 6px 10px;
+}
+
+.profile-label {
+    font-size: 10px;
+    font-weight: bold;
+    color: #233d91;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.profile-value {
+    font-size: 13px;
+    color: #1a1a1a;
+    margin-top: 2px;
+}
+
+/* ── Profile Action Buttons ── */
+.profile-actions {
+    display: flex;
+    gap: 12px;
+    padding: 16px 20px;
+    justify-content: flex-end;
+    border-top: 1px solid #e2e8f0;
+    background: #f8fafc;
+    border-radius: 0 0 10px 10px;
+    position: sticky;
+    bottom: 0;
+}
+
+.profile-actions .btn-primary {
+    background: #233d91;
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.profile-actions .btn-primary:hover { background: #1a2e6e; }
+
+.btn-secondary {
+    background: #fff;
+    color: #555;
+    border: 1px solid #ccc;
+    padding: 10px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.btn-secondary:hover { background: #f1f5f9; color: #233d91; border-color: #233d91; }
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+#sidebarNav {
+    flex: 1;
+}
+
+.sidebar-logout {
+    padding: 16px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.sidebar-logout a {
+    display: block;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #ff6b6b;
+    font-weight: 700;
+    font-size: 14px;
+    border-radius: 6px;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid rgba(255, 100, 100, 0.3);
+    transition: background 0.2s;
+}
+
+.sidebar-logout a:hover {
+    background: rgba(255, 50, 50, 0.2);
+}
