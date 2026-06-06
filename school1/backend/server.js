@@ -84,9 +84,9 @@ async function startServer() {
     await db.sequelize.authenticate();
     console.log('Database connection established.');
 
-    // 2. SKIP SYNCING (Since tables are already created via db.sql)
-    // await db.sequelize.sync(); 
-    console.log('Database sync skipped (Tables already exist).');
+    // 2. CREATE TABLES (I uncommented this line to fix the "Unknown Column" error)
+    await db.sequelize.sync(); 
+    console.log('Database tables verified and created.');
 
     // 3. Verify Default Users
     await seedDefaultUsers();
