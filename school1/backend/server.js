@@ -75,16 +75,18 @@ async function seedDefaultUsers() {
 
 async function startServer() {
   try {
+    // 1. Just connect, don't try to change the structure
     await db.sequelize.authenticate();
     console.log('Database connection established.');
 
-    // 🔥 This will DELETE everything and RECREATE the correct tables one time
-    await db.sequelize.sync({ alter: true });
-    console.log('Database tables created from scratch.');
+    // 2. We skip sync to avoid the "UNIQUE KEY" error on Render
+    console.log('Database sync skipped (Structure is handled manually).');
 
+    // 3. Verify Default Users (Staff login)
     await seedDefaultUsers();
     console.log('Default users verified.');
 
+    // 4. Start the server
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
