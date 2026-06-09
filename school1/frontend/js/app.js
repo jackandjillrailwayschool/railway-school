@@ -123,8 +123,8 @@ function updateStudentTable(list) {
                     <button class="action-btn delete" onclick="deleteStudent('${s.studentId}')">Delete</button>
                     <button class="action-btn" style="background:#7c3aed;color:#fff;"
                         onclick="openRemarks('${s.studentId}','${s.admissionNo}','${s.name}')">Remarks</button>
-                    <button class="action-btn" style="background:#0369a1;color:#fff;"
-                        onclick="setStudentPassword('${s.admissionNo}','${s.name}')">🔑 Set Password</button>
+                   <button class="action-btn" style="background:#0369a1;color:#fff;" 
+        onclick="setStudentPassword('${s.admissionNo}', '${s.name}')">🔑 Set Password</button>
                 </td>
             </tr>`).join('')}
         </tbody>
@@ -1114,4 +1114,25 @@ async function setStudentPassword(admissionNo, studentName) {
     }
   }
 
+
+  // Function for the 'Set Password' button in Staff Dashboard
+async function setStudentPassword(admissionNo, name) {
+    const newPassword = prompt(`Set password for ${name}:\n(minimum 6 characters)`);
+    
+    if (!newPassword) return;
+    if (newPassword.length < 6) return alert("Password too short!");
+
+    try {
+        const response = await apiRequest('/auth/set-student-password', {
+            method: 'POST',
+            body: JSON.stringify({ 
+                admissionNo: parseInt(admissionNo), 
+                newPassword: newPassword 
+            })
+        });
+        alert(response.message || "Password updated successfully!");
+    } catch (err) {
+        alert("Failed to set password: " + err.message);
+    }
+}
 init();
