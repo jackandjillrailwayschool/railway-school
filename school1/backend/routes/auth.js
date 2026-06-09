@@ -156,7 +156,7 @@ router.post('/student-login', async (req, res) => {
 
   try {
     const student = await db.Student.findOne({
-      where: { admissionNo: parseInt(admissionNo) }   // PK integer
+      where: { admissionNo: parseInt(admissionNo, 10) }   // PK integer
     });
 
     if (!student) {

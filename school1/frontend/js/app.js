@@ -117,16 +117,15 @@ function updateStudentTable(list) {
                 <td>${s.studentId}</td>
                 <td>${s.name}</td>
                 <td>${s.class}-${s.section}</td>
-               <td>
-    <button class="action-btn view"   onclick="viewFullProfile('${s.admissionNo}')">View</button>
-    <button class="action-btn edit"   onclick="editStudent('${s.admissionNo}')">Edit</button>
-    <button class="action-btn delete" onclick="deleteStudent('${s.studentId}')">Delete</button>
+                <td>
+                    <button class="action-btn view"   onclick="viewFullProfile('${s.admissionNo}')">View</button>
+                    <button class="action-btn edit"   onclick="editStudent('${s.admissionNo}')">Edit</button>
+                    <button class="action-btn delete" onclick="deleteStudent('${s.studentId}')">Delete</button>
                     <button class="action-btn" style="background:#7c3aed;color:#fff;"
-                       
-                       onclick="openRemarks('\${s.studentId}','\${s.admissionNo}','\${s.name}')">Remarks</button>
-                    <button class="action-btn" style="background:#0369a1;color:#fff;" onclick="setStudentPassword('\${s.admissionNo}','\${s.name}')">?? Set Password</button>
-                    <button class="action-btn" style="background:#0369a1;color:#fff;" onclick="setStudentPassword('${s.admissionNo}','${s.name}')">🔑 Set Password</button>
-                    <td>
+                        onclick="openRemarks('${s.studentId}','${s.admissionNo}','${s.name}')">Remarks</button>
+                    <button class="action-btn" style="background:#0369a1;color:#fff;"
+                        onclick="setStudentPassword('${s.admissionNo}','${s.name}')">🔑 Set Password</button>
+                </td>
             </tr>`).join('')}
         </tbody>
     </table>`;
@@ -653,6 +652,7 @@ function filterStatStudents() {
                     <button class="action-btn" style="background:#0369a1;color:#fff;" onclick="setStudentPassword('\${s.admissionNo}','\${s.name}')">?? Set Password</button>
                                 <button class="action-btn" style="background:#0369a1;color:#fff;" onclick="setStudentPassword('${s.admissionNo}','${s.name}')">🔑 Set Password</button>
                           
+                               <button class="action-btn" style="background:#ef4444;color:#fff;"
                                 onclick="deleteStudentStat('${s.admissionNo}','${s.name}')">Delete</button>
                         </td>
                     </tr>`).join('')}
@@ -1115,4 +1115,3 @@ async function setStudentPassword(admissionNo, studentName) {
   }
 
 init();
-

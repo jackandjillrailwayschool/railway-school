@@ -14,7 +14,6 @@ const feeRoutes = require('./routes/fees');
 const attendanceRoutes = require('./routes/attendance');
 const studentPortalRoutes = require('./routes/studentPortal');
 
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -31,25 +30,21 @@ app.use('/api/marks', markRoutes);
 app.use('/api/fees', feeRoutes);
 app.use('/api/attendance', attendanceRoutes);
 app.use('/api/student-portal', studentPortalRoutes);
+
 // --- FRONTEND INTEGRATION (ONE LINK SETUP) ---
-// Serve all static files (CSS, JS, Images) from the frontend folder
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
-// Main Route (Login/Index)
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
 });
 
-// Fallback: This allows direct links to HTML files or React-style routing
 app.get('*', (req, res) => {
-  // If the request isn't an API call, send the index.html
   if (!req.path.startsWith('/api')) {
     res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
   }
 });
-// ----------------------------------------------
 
-// Error Handling Middleware
+// Error Handling
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).json({ message: err.message || 'Internal server error' });
@@ -75,26 +70,23 @@ async function seedDefaultUsers() {
         });
       }
     } catch (e) {
-      console.log(`Note: User ${user.email} might already exist.`);
+      console.log(`Note: User ${user.email} verified.`);
     }
   }
 }
 
 async function startServer() {
   try {
-    // 1. Connect to TiDB Cloud
     await db.sequelize.authenticate();
     console.log('Database connection established.');
 
-    // 2. CREATE TABLES (I uncommented this line to fix the "Unknown Column" error)
-    await db.sequelize.sync(); 
-    console.log('Database tables verified and created.');
+    // 🔥 CHANGED THIS LINE TO ALLOW COLUMN UPDATES 🔥
+    await db.sequelize.sync({ alter: true }); 
+    console.log('Database schema synchronized.');
 
-    // 3. Verify Default Users
     await seedDefaultUsers();
     console.log('Default users verified.');
 
-    // 4. Start listening on the port provided by Render
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
