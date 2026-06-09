@@ -12,6 +12,8 @@ const studentRoutes = require('./routes/students');
 const markRoutes = require('./routes/marks');
 const feeRoutes = require('./routes/fees');
 const attendanceRoutes = require('./routes/attendance');
+const studentPortalRoutes = require('./routes/studentPortal');
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -28,7 +30,7 @@ app.use('/api/students', studentRoutes);
 app.use('/api/marks', markRoutes);
 app.use('/api/fees', feeRoutes);
 app.use('/api/attendance', attendanceRoutes);
-
+app.use('/api/student-portal', studentPortalRoutes);
 // --- FRONTEND INTEGRATION (ONE LINK SETUP) ---
 // Serve all static files (CSS, JS, Images) from the frontend folder
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
