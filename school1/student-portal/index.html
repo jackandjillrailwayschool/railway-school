@@ -12,6 +12,7 @@
             --navy: #0a1628;
             --gold: #c8a84b;
             --white: #ffffff;
+            --radius: 16px;
         }
 
         body {
@@ -19,25 +20,25 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            /* 🔥 REMOVED BLUE GLARE: Using pure black overlay 🔥 */
             background: 
-                linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.85)),
+                linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.85)),
                 url("../student.jpg") center/cover no-repeat fixed;
         }
 
-        /* ── THE BRANDED HEADER (Matching your image) ── */
+        /* ── FULL-WIDTH BRANDED HEADER ── */
         header {
-            background: #0d1b3e; /* Deep Navy */
+            background: var(--navy);
             position: relative;
             overflow: hidden;
             text-align: center;
             padding: 50px 20px 40px;
-            width: 95%;
-            max-width: 1200px;
-            margin: 30px auto 0;
-            border-radius: 12px;
-            border: 1px solid rgba(200, 168, 75, 0.3);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            /* 🔥 INCREASED TO FULL WIDTH 🔥 */
+            width: 100%;
+            max-width: none; 
+            margin: 0; /* Removed top margin to hit the edges */
+            border-bottom: 3px solid var(--gold); /* Stronger gold border */
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            z-index: 100;
         }
 
         /* Diamond Grid Pattern */
@@ -52,20 +53,29 @@
             background-position: 0 0, 0 20px, 20px 20px, 20px 0;
         }
 
+        /* LOGOS - Placed inside the wider header */
         .logo {
-            position: absolute; top: 35px; width: 110px; height: 110px;
-            border-radius: 50%; border: 3px solid var(--gold); background: white; object-fit: contain; padding: 5px;
-            z-index: 10; box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            position: absolute; 
+            top: 40px; 
+            width: clamp(80px, 10vw, 120px); 
+            height: clamp(80px, 10vw, 120px);
+            border-radius: 50%; 
+            border: 3px solid var(--gold); 
+            background: white; 
+            object-fit: contain; 
+            padding: 5px;
+            z-index: 10; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
-        .logo-left  { left: 40px; }
-        .logo-right { right: 40px; }
+        .logo-left  { left: 5%; } /* Relative to screen width */
+        .logo-right { right: 5%; }
 
         .header-content { position: relative; z-index: 1; }
         
         .header-content h1 { 
             font-family: 'Playfair Display', serif; 
             color: var(--white); 
-            font-size: clamp(24px, 5vw, 48px); 
+            font-size: clamp(26px, 5vw, 52px); 
             letter-spacing: 2px;
             margin-bottom: 10px;
         }
@@ -85,18 +95,29 @@
 
         /* STATISTICS BAR */
         .stats { 
-            display: flex; justify-content: center; gap: clamp(20px, 6vw, 80px); 
+            display: flex; 
+            justify-content: center; 
+            gap: clamp(30px, 8vw, 100px); 
             margin-top: 15px; 
         }
-        .stat-val { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--gold); font-weight: 700; }
+        .stat-val { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--gold); font-weight: 700; }
         .stat-lbl { font-size: 9px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 4px; font-weight: 700; }
 
-        /* ── COMPACT LOGIN BOX ── */
-        main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 50px 20px; }
+        /* ── LOGIN BOX (Remains centered) ── */
+        main { 
+            flex: 1; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 50px 20px; 
+        }
 
         .login-card {
-            background: var(--white); width: 100%; max-width: 350px; /* Smaller width */
-            border-radius: 16px; padding: 40px 30px;
+            background: var(--white); 
+            width: 100%; 
+            max-width: 360px;
+            border-radius: 16px; 
+            padding: 40px 30px;
             box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
             position: relative;
         }
@@ -105,11 +126,11 @@
         .badge { display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; color: var(--navy); padding: 5px 12px; border-radius: 30px; font-size: 10px; font-weight: 700; margin-bottom: 20px; text-transform: uppercase; }
         
         .field { margin-bottom: 18px; }
-        .field label { display: block; font-size: 10px; font-weight: 700; color: var(--navy); text-transform: uppercase; margin-bottom: 6px; }
+        .field label { display: block; font-size: 10px; font-weight: 700; color: var(--navy); text-transform: uppercase; margin-bottom: 7px; }
         .input-wrap input { width: 100%; padding: 13px 15px; border: 1.5px solid #e2e8f0; border-radius: 10px; font-size: 14px; background: #fcfdfe; outline: none; transition: 0.2s; }
         .input-wrap input:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(200, 168, 75, 0.1); }
 
-        .btn-main { width: 100%; padding: 15px; background: var(--navy); color: var(--gold); border: none; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
+        .btn-main { width: 100%; padding: 15px; background: var(--navy); color: var(--gold); border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
         .btn-main:hover { background: #1a2a4d; transform: translateY(-1px); }
 
         .footer-link { text-align: center; margin-top: 25px; font-size: 12px; }
@@ -120,7 +141,7 @@
         @media (max-width: 900px) { 
             .logo { display: none; } 
             .stats { display: none; }
-            header { padding: 30px 15px; margin-top: 15px; }
+            header { padding: 30px 15px; }
         }
     </style>
 </head>
@@ -175,7 +196,7 @@
         </div>
     </main>
 
-    <footer>© 2026 Jack & Jill EM High School · South Coast Railway</footer>
+    <footer>© 2026 Jack & Jill EM High School</footer>
 
     <script>
         const API = 'https://jack-and-jill-school.onrender.com';
