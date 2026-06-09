@@ -277,32 +277,23 @@
 
   <script>
     
-    // 1. This MUST be the link to your STAFF backend
+    // MAKE SURE THERE IS NO TRAILING SLASH AT THE END
     const API = 'https://jack-and-jill-school.onrender.com';
 
     async function doLogin() {
-      hideError();
-      const admissionNo = document.getElementById('admissionNo').value.trim();
-      const password    = document.getElementById('password').value.trim();
-
-      if (!admissionNo || !password) {
-        showError('Please enter both Admission Number and Password.');
-        return;
-      }
-
-      const btn = document.getElementById('loginBtn');
-      btn.classList.add('loading');
-      btn.disabled = true;
-
+      // ... existing code ...
       try {
-        // 2. We add 'mode: cors' to ensure the browser allows the request
-        const res  = await fetch(`${API}/api/auth/student-login`, {
+        // Change the fetch line to this:
+        const res = await fetch(API + '/api/auth/student-login', {
           method: 'POST',
-          mode: 'cors', 
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
           body: JSON.stringify({ admissionNo: parseInt(admissionNo), password })
         });
         
+        // ... rest of code ...
         const data = await res.json();
 
         if (res.ok && data.token) {

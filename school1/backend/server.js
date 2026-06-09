@@ -22,10 +22,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 // Allow both local testing and your specific student portal link
 app.use(cors({
-  origin: [
-    'https://jjschool-students.onrender.com', // Your Student Portal
-    'https://jack-and-jill-school.onrender.com' // Your Staff Portal
-  ],
+  origin: '*', 
   credentials: true
 }));
 
