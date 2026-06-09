@@ -4,342 +4,211 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Portal — Jack & Jill EM High School</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        
         :root {
-            --navy: #0a1628;
-            --navy-light: #142040;
-            --gold: #c8a84b;
-            --gold-bright: #e6c96e;
-            --white: #ffffff;
-            --off-white: #f8fafc;
-            --text: #1e293b;
-            --muted: #64748b;
-            --error: #dc2626;
-            --radius: 16px;
+            --navy:#0f1f4b; --blue:#1a3a8a; --blue2:#1e40af;
+            --accent:#c9a84c; --white:#ffffff; --off:#f5f4f0;
+            --border:#e2e8f0; --muted:#64748b; --text:#1e293b;
+            --green:#15803d; --red:#b91c1c;
         }
+        html, body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--navy); min-height: 100vh; color: var(--text); }
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+        /* ── HERO HEADER ── */
+        .hero {
             background: var(--navy);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            color: var(--text);
+            position: relative; overflow: hidden;
+            text-align: center; padding: 60px 24px 40px;
+            border-bottom: 1px solid rgba(200,168,75,0.15);
+        }
+        .hero::before {
+            content:''; position:absolute; inset:0;
+            background-image: repeating-linear-gradient(45deg,rgba(255,255,255,.02) 0,rgba(255,255,255,.02) 1px,transparent 0,transparent 50%);
+            background-size:30px 30px;
         }
 
-        /* ── HEADER ── */
-        header {
-            background: rgba(10, 22, 40, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 15px 40px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            border-bottom: 1px solid rgba(200, 168, 75, 0.2);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 100;
+        .hero-logo {
+            position: absolute; top: 30px; width: clamp(80px, 10vw, 130px); height: clamp(80px, 10vw, 130px);
+            border-radius: 50%; border: 3px solid var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 10; background: white; object-fit: cover;
         }
+        .hero-logo-left  { left: 50px; }
+        .hero-logo-right { right: 50px; }
 
-        .header-logo {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: 2px solid var(--gold);
-            object-fit: cover;
-            background: white;
-        }
+        .hero-content { position:relative; z-index:1; }
+        .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(24px, 4vw, 42px); color:var(--white); letter-spacing:1px; margin-bottom:8px; }
+        .hero-tagline { font-size:12px; font-weight:600; letter-spacing:3px; color:var(--accent); text-transform:uppercase; }
 
-        .header-text h1 {
-            font-family: 'Playfair Display', serif;
-            color: var(--gold);
-            font-size: clamp(16px, 2vw, 20px);
-            letter-spacing: 0.5px;
-        }
-
-        .header-text p {
-            color: rgba(255,255,255,0.5);
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* ── MAIN CONTENT ── */
-        main {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 100px 20px 40px;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(200, 168, 75, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(200, 168, 75, 0.05) 0%, transparent 40%),
-                var(--navy);
+        /* ── LOGIN AREA ── */
+        .main-container {
+            display: flex; justify-content: center; align-items: center; padding: 60px 20px;
+            background: radial-gradient(circle at center, #1a3a8a22 0%, transparent 70%);
         }
 
         .login-card {
-            background: var(--white);
-            width: 100%;
-            max-width: 440px;
-            border-radius: var(--radius);
-            padding: 50px 40px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            position: relative;
-            overflow: hidden;
+            background: var(--white); width: 100%; max-width: 440px;
+            border-radius: 20px; padding: 50px 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            position: relative; overflow: hidden;
         }
-
         .login-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, var(--gold), var(--gold-bright), var(--gold));
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+            background: linear-gradient(90deg, var(--accent), #e6c96e, var(--accent));
         }
 
         .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(200, 168, 75, 0.1);
-            color: var(--navy);
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 24px;
-            border: 1px solid rgba(200, 168, 75, 0.3);
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(200,168,75,0.12); color: var(--navy);
+            padding: 6px 16px; border-radius: 30px; font-size: 11px;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px;
         }
 
-        .card-head h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 32px;
-            color: var(--navy);
-            margin-bottom: 10px;
-        }
+        .panel-title { font-family:'Playfair Display',serif; font-size:28px; color:var(--navy); margin-bottom:8px; }
+        .panel-sub { font-size:14px; color:var(--muted); margin-bottom:32px; line-height:1.5; }
 
-        .card-head p {
-            font-size: 14px;
-            color: var(--muted);
-            line-height: 1.6;
-            margin-bottom: 32px;
-        }
-
-        /* ── FORM FIELDS ── */
+        /* ── FORM ── */
         .field { margin-bottom: 20px; }
-        .field label {
-            display: block;
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--navy);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
+        .field label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--navy); margin-bottom: 8px; letter-spacing: 0.5px;}
+        
         .input-wrap { position: relative; }
         .input-wrap input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 15px;
-            font-family: inherit;
-            transition: all 0.2s;
-            outline: none;
-            background: var(--off-white);
+            width: 100%; padding: 14px 16px; border: 1.5px solid var(--border);
+            border-radius: 10px; font-size: 15px; font-family: inherit;
+            background: #f8fafc; transition: all 0.2s; outline: none;
         }
+        .input-wrap input:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(26,58,138,0.08); background: white; }
 
-        .input-wrap input:focus {
-            border-color: var(--gold);
-            background: white;
-            box-shadow: 0 0 0 4px rgba(200, 168, 75, 0.1);
-        }
-
-        .toggle-pw {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--muted);
-            font-size: 18px;
-        }
+        .pwd-toggle { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--muted); font-size: 18px; }
 
         /* ── BUTTON ── */
-        .btn-login {
-            width: 100%;
-            padding: 16px;
-            background: var(--navy);
-            color: var(--gold);
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            letter-spacing: 0.5px;
-            margin-top: 10px;
+        .btn-main {
+            width: 100%; padding: 15px; background: var(--navy); color: var(--white);
+            border: none; border-radius: 10px; font-size: 15px; font-weight: 700;
+            cursor: pointer; transition: all 0.2s; margin-top: 10px; letter-spacing: 0.5px;
         }
+        .btn-main:hover { background: var(--blue2); transform: translateY(-1px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .btn-main:disabled { opacity: 0.6; cursor: not-allowed; }
 
-        .btn-login:hover {
-            background: var(--navy-light);
-            transform: translateY(-1px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
-        }
+        /* ── ERROR MSG ── */
+        .msg { display: none; font-size: 13px; padding: 12px; border-radius: 8px; margin-bottom: 20px; text-align: center; border: 1px solid transparent; }
+        .msg.error { display: block; background: #fef2f2; border-color: #fecaca; color: var(--red); }
 
-        .btn-login:active { transform: translateY(0); }
-        .btn-login:disabled { opacity: 0.6; cursor: not-allowed; }
+        .footer-link { text-align: center; margin-top: 25px; font-size: 13px; color: var(--muted); }
+        .footer-link a { color: var(--blue2); font-weight: 700; text-decoration: none; border-bottom: 1.5px solid var(--accent); }
 
-        /* ── MESSAGES ── */
-        .msg {
-            display: none;
-            font-size: 13px;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 500;
-        }
-        .msg.error { background: #fef2f2; border: 1px solid #fecaca; color: var(--error); }
-        .msg.show { display: block; }
+        .page-footer { background: #07101f; text-align: center; padding: 25px; font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 0.5px; }
 
-        .footer-link {
-            text-align: center;
-            margin-top: 25px;
-            font-size: 13px;
-            color: var(--muted);
-        }
-        .footer-link a {
-            color: var(--navy);
-            font-weight: 700;
-            text-decoration: none;
-            border-bottom: 1.5px solid var(--gold);
-        }
-
-        footer {
-            text-align: center;
-            padding: 25px;
-            color: rgba(255,255,255,0.3);
-            font-size: 11px;
-            letter-spacing: 0.5px;
-        }
-
-        @media (max-width: 480px) {
-            .login-card { padding: 35px 25px; }
-            header { padding: 10px 20px; }
+        @media (max-width: 860px) {
+            .hero-logo { display: none; }
+            .login-card { padding: 40px 25px; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <img src="https://jack-and-jill-school.onrender.com/jack1.jpeg" class="header-logo" alt="Logo">
-        <div class="header-text">
-            <h1>JACK & JILL EM HIGH SCHOOL</h1>
-            <p>Student Administration System</p>
-        </div>
-    </header>
+<div class="hero">
+    <img src="https://jack-and-jill-school.onrender.com/jack2.jpeg" class="hero-logo hero-logo-left" alt="Indian Railways">
+    <img src="https://jack-and-jill-school.onrender.com/jack1.jpeg" class="hero-logo hero-logo-right" alt="School Logo">
+    <div class="hero-content">
+        <h1>JACK & JILL EM HIGH SCHOOL</h1>
+        <div class="hero-tagline">South Coast Railway · Vijayawada</div>
+    </div>
+</div>
 
-    <main>
-        <div class="login-card">
-            <div class="badge">🎓 Student Portal</div>
+<div class="main-container">
+    <div class="login-card">
+        <div class="badge">🎓 Student Portal</div>
+        <h2 class="panel-title">Student Login</h2>
+        <p class="panel-sub">Sign in with your Admission Number to view your academic reports, marks, and fees.</p>
+
+        <div id="errorMsg" class="msg error"></div>
+
+        <div class="field">
+            <label>Admission Number</label>
+            <div class="input-wrap">
+                <input type="text" id="admissionNo" placeholder="e.g. 1001" inputmode="numeric">
+            </div>
+        </div>
+
+        <div class="field">
+            <label>Password</label>
+            <div class="input-wrap">
+                <input type="password" id="password" placeholder="••••••••">
+                <button class="pwd-toggle" onclick="togglePw()" type="button">👁</button>
+            </div>
+        </div>
+
+        <button class="btn-main" id="loginBtn" onclick="doLogin()">Sign In to Portal</button>
+
+        <div class="footer-link">
+            Are you staff? <a href="https://jack-and-jill-school.onrender.com">Go to Staff Portal →</a>
+        </div>
+    </div>
+</div>
+
+<div class="page-footer">
+    &copy; 2026 Jack and Jill School. All rights reserved. Railway School Administration System.
+</div>
+
+<script>
+    const API = 'https://jack-and-jill-school.onrender.com';
+
+    function togglePw() {
+        const p = document.getElementById('password');
+        p.type = p.type === 'password' ? 'text' : 'password';
+    }
+
+    function showError(msg) {
+        const el = document.getElementById('errorMsg');
+        el.innerText = msg;
+        el.classList.add('error');
+    }
+
+    function hideError() {
+        const el = document.getElementById('errorMsg');
+        el.classList.remove('error');
+    }
+
+    async function doLogin() {
+        hideError();
+        const adm = document.getElementById('admissionNo').value.trim();
+        const pwd = document.getElementById('password').value.trim();
+
+        if (!adm || !pwd) return showError('Please enter both Admission No and Password.');
+
+        const btn = document.getElementById('loginBtn');
+        const originalText = btn.innerText;
+        btn.innerText = 'Verifying...';
+        btn.disabled = true;
+
+        try {
+            const res = await fetch(`${API}/api/auth/student-login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ admissionNo: parseInt(adm), password: pwd })
+            });
             
-            <div class="card-head">
-                <h2>Welcome Back</h2>
-                <p>Enter your credentials to access your academic reports, marks, and attendance.</p>
-            </div>
+            const data = await res.json();
 
-            <div id="errorMsg" class="msg error"></div>
-
-            <div class="field">
-                <label>Admission Number</label>
-                <div class="input-wrap">
-                    <input type="text" id="admissionNo" placeholder="e.g. 1001">
-                </div>
-            </div>
-
-            <div class="field">
-                <label>Your Password</label>
-                <div class="input-wrap">
-                    <input type="password" id="password" placeholder="••••••••">
-                    <button class="toggle-pw" onclick="togglePw()" type="button">👁</button>
-                </div>
-            </div>
-
-            <button class="btn-login" id="loginBtn" onclick="doLogin()">Sign In to Portal</button>
-
-            <div class="footer-link">
-                Are you staff? <a href="https://jack-and-jill-school.onrender.com">Go to Staff Portal →</a>
-            </div>
-        </div>
-    </main>
-
-    <footer>© 2026 Jack & Jill EM High School · South Coast Railway Womens Welfare Organization</footer>
-
-    <script>
-        const API = 'https://jack-and-jill-school.onrender.com';
-
-        function togglePw() {
-            const p = document.getElementById('password');
-            p.type = p.type === 'password' ? 'text' : 'password';
-        }
-
-        function showError(msg) {
-            const el = document.getElementById('errorMsg');
-            el.innerText = msg;
-            el.classList.add('show');
-        }
-
-        function hideError() {
-            document.getElementById('errorMsg').classList.remove('show');
-        }
-
-        async function doLogin() {
-            hideError();
-            const adm = document.getElementById('admissionNo').value.trim();
-            const pwd = document.getElementById('password').value.trim();
-
-            if (!adm || !pwd) return showError('Please enter both fields.');
-
-            const btn = document.getElementById('loginBtn');
-            const originalText = btn.innerText;
-            btn.innerText = 'Verifying...';
-            btn.disabled = true;
-
-            try {
-                const res = await fetch(`${API}/api/auth/student-login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ admissionNo: parseInt(adm), password: pwd })
-                });
-                
-                const data = await res.json();
-
-                if (res.ok) {
-                    localStorage.setItem('studentToken', data.token);
-                    localStorage.setItem('studentInfo', JSON.stringify(data.student));
-                    window.location.href = 'dashboard.html';
-                } else {
-                    showError(data.message || 'Login failed. Please check credentials.');
-                }
-            } catch (err) {
-                showError('Server is waking up. Please try again in a few seconds.');
-            } finally {
-                btn.innerText = originalText;
-                btn.disabled = false;
+            if (res.ok) {
+                localStorage.setItem('studentToken', data.token);
+                localStorage.setItem('studentInfo', JSON.stringify(data.student));
+                window.location.href = 'dashboard.html';
+            } else {
+                showError(data.message || 'Invalid credentials.');
             }
+        } catch (err) {
+            showError('Server is waking up. Please try again in 10 seconds.');
+        } finally {
+            btn.innerText = originalText;
+            btn.disabled = false;
         }
+    }
 
-        // Enter key to login
-        document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
-    </script>
+    // Enter key support
+    document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+</script>
+
 </body>
 </html>
