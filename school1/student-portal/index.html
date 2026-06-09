@@ -277,23 +277,64 @@
 
   <script>
     
-    // MAKE SURE THERE IS NO TRAILING SLASH AT THE END
+    
+    // 1. Point to your LIVE Staff Backend
     const API = 'https://jack-and-jill-school.onrender.com';
 
+    // 2. Redirect if already logged in
+    if (localStorage.getItem('studentToken')) {
+      window.location.href = 'dashboard.html';
+    }
+
+    // 3. FIX: Define the missing toggle function
+    function togglePw() {
+      const inp = document.getElementById('password');
+      if (inp) {
+        inp.type = inp.type === 'password' ? 'text' : 'password';
+      }
+    }
+
+    // 4. FIX: Define the missing error functions
+    function showError(msg) {
+      const el = document.getElementById('errorMsg');
+      if (el) {
+        el.textContent = msg;
+        el.classList.add('show');
+      } else {
+        alert(msg);
+      }
+    }
+
+    function hideError() {
+      const el = document.getElementById('errorMsg');
+      if (el) {
+        el.classList.remove('show');
+      }
+    }
+
+    // 5. Handle the Login process
     async function doLogin() {
-      // ... existing code ...
+      hideError(); // Now this function exists!
+      
+      const admissionNo = document.getElementById('admissionNo').value.trim();
+      const password    = document.getElementById('password').value.trim();
+
+      if (!admissionNo || !password) {
+        showError('Please enter both Admission Number and Password.');
+        return;
+      }
+
+      const btn = document.getElementById('loginBtn');
+      btn.classList.add('loading');
+      btn.disabled = true;
+
       try {
-        // Change the fetch line to this:
-        const res = await fetch(API + '/api/auth/student-login', {
+        const res = await fetch(`${API}/api/auth/student-login`, {
           method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ admissionNo: parseInt(admissionNo), password })
         });
         
-        // ... rest of code ...
         const data = await res.json();
 
         if (res.ok && data.token) {
@@ -304,13 +345,19 @@
           showError(data.message || 'Login failed. Please check your credentials.');
         }
       } catch (err) {
-        console.error("Login Error:", err);
-        showError('Server is waking up. Please wait 10 seconds and try again.');
+        console.error("Fetch error:", err);
+        showError('Cannot reach the server. Please try again in 10 seconds.');
       } finally {
         btn.classList.remove('loading');
         btn.disabled = false;
       }
     }
+
+    // Allow Enter key to login
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter') doLogin();
+    });
+  
 
   </script>
 </body>
