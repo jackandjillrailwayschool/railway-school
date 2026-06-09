@@ -649,7 +649,8 @@ function filterStatStudents() {
                                 onclick="generateStudentReport('${s.admissionNo}')">View Report</button>
                             <button class="action-btn" style="background:#7c3aed;color:#fff;"
                                 onclick="openRemarks('${s.studentId}','${s.admissionNo}','${s.name}')">Remarks</button>
-                            <button class="action-btn" style="background:#ef4444;color:#fff;"
+                                <button class="action-btn" style="background:#0369a1;color:#fff;" onclick="setStudentPassword('${s.admissionNo}','${s.name}')">🔑 Set Password</button>
+                          
                                 onclick="deleteStudentStat('${s.admissionNo}','${s.name}')">Delete</button>
                         </td>
                     </tr>`).join('')}
