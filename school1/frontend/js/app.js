@@ -121,10 +121,10 @@ function updateStudentTable(list) {
     <button class="action-btn view"   onclick="viewFullProfile('${s.admissionNo}')">View</button>
     <button class="action-btn edit"   onclick="editStudent('${s.admissionNo}')">Edit</button>
     <button class="action-btn delete" onclick="deleteStudent('${s.studentId}')">Delete</button>
-    <button class="action-btn" style="background:#7c3aed;color:#fff;"
-        onclick="openRemarks('${s.studentId}','${s.admissionNo}','${s.name}')">Remarks</button>
-    <button class="action-btn" style="background:#0369a1;color:#fff;"
-        onclick="setStudentPassword('${s.admissionNo}','${s.name}')">🔑 Password</button>
+                    <button class="action-btn" style="background:#7c3aed;color:#fff;"
+                        onclick="openRemarks('${s.studentId}','${s.admissionNo}','${s.name}')">Remarks</button>
+                    <button class="action-btn" style="background:#0369a1;color:#fff;"
+                        onclick="setStudentPassword('${s.admissionNo}','${s.name}')">🔑 Set Password</button>
 </td>
             </tr>`).join('')}
         </tbody>
