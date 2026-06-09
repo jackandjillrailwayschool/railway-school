@@ -78,9 +78,9 @@ async function startServer() {
     await db.sequelize.authenticate();
     console.log('Database connection established.');
 
-    // This creates the missing columns (like password) in TiDB automatically
-    await db.sequelize.sync({ alter: true }); 
-    console.log('Database schema synchronized.');
+    // 🔥 This will DELETE everything and RECREATE the correct tables one time
+    await db.sequelize.sync({ force: true }); 
+    console.log('Database tables created from scratch.');
 
     await seedDefaultUsers();
     console.log('Default users verified.');
