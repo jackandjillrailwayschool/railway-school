@@ -123,7 +123,8 @@ function updateStudentTable(list) {
     <button class="action-btn delete" onclick="deleteStudent('${s.studentId}')">Delete</button>
                     <button class="action-btn" style="background:#7c3aed;color:#fff;"
                        
-                       onclick="openRemarks('${s.studentId}','${s.admissionNo}','${s.name}')">Remarks</button>
+                       onclick="openRemarks('\${s.studentId}','\${s.admissionNo}','\${s.name}')">Remarks</button>
+                    <button class="action-btn" style="background:#0369a1;color:#fff;" onclick="setStudentPassword('\${s.admissionNo}','\${s.name}')">?? Set Password</button>
                     <button class="action-btn" style="background:#0369a1;color:#fff;" onclick="setStudentPassword('${s.admissionNo}','${s.name}')">🔑 Set Password</button>
                     <td>
             </tr>`).join('')}
@@ -648,7 +649,8 @@ function filterStatStudents() {
                             <button class="action-btn view"
                                 onclick="generateStudentReport('${s.admissionNo}')">View Report</button>
                             <button class="action-btn" style="background:#7c3aed;color:#fff;"
-                                onclick="openRemarks('${s.studentId}','${s.admissionNo}','${s.name}')">Remarks</button>
+                                onclick="openRemarks('\${s.studentId}','\${s.admissionNo}','\${s.name}')">Remarks</button>
+                    <button class="action-btn" style="background:#0369a1;color:#fff;" onclick="setStudentPassword('\${s.admissionNo}','\${s.name}')">?? Set Password</button>
                                 <button class="action-btn" style="background:#0369a1;color:#fff;" onclick="setStudentPassword('${s.admissionNo}','${s.name}')">🔑 Set Password</button>
                           
                                 onclick="deleteStudentStat('${s.admissionNo}','${s.name}')">Delete</button>
@@ -1113,3 +1115,4 @@ async function setStudentPassword(admissionNo, studentName) {
   }
 
 init();
+
