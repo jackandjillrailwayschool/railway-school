@@ -117,13 +117,15 @@ function updateStudentTable(list) {
                 <td>${s.studentId}</td>
                 <td>${s.name}</td>
                 <td>${s.class}-${s.section}</td>
-                <td>
-                    <button class="action-btn view"   onclick="viewFullProfile('${s.admissionNo}')">View</button>
-                    <button class="action-btn edit"   onclick="editStudent('${s.admissionNo}')">Edit</button>
-                    <button class="action-btn delete" onclick="deleteStudent('${s.studentId}')">Delete</button>
-                    <button class="action-btn" style="background:#7c3aed;color:#fff;"
-                        onclick="openRemarks('${s.studentId}','${s.admissionNo}','${s.name}')">Remarks</button>
-                </td>
+               <td>
+    <button class="action-btn view"   onclick="viewFullProfile('${s.admissionNo}')">View</button>
+    <button class="action-btn edit"   onclick="editStudent('${s.admissionNo}')">Edit</button>
+    <button class="action-btn delete" onclick="deleteStudent('${s.studentId}')">Delete</button>
+    <button class="action-btn" style="background:#7c3aed;color:#fff;"
+        onclick="openRemarks('${s.studentId}','${s.admissionNo}','${s.name}')">Remarks</button>
+    <button class="action-btn" style="background:#0369a1;color:#fff;"
+        onclick="setStudentPassword('${s.admissionNo}','${s.name}')">🔑 Password</button>
+</td>
             </tr>`).join('')}
         </tbody>
     </table>`;
@@ -1077,5 +1079,36 @@ async function deleteRemark(id, studentId, admissionNo, studentName) {
         openRemarks(studentId, admissionNo, studentName);
     } catch(err) { alert('Failed to delete: ' + err.message); }
 }
+
+
+async function setStudentPassword(admissionNo, studentName) {
+    const newPassword = prompt(`Set password for ${studentName}:\n(minimum 6 characters)`);
+    
+    if (!newPassword) return;
+    if (newPassword.length < 6) {
+      alert('Password must be at least 6 characters!');
+      return;
+    }
+  
+    try {
+      const res = await fetch('/api/auth/set-student-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify({ admissionNo, newPassword })
+      });
+  
+      const data = await res.json();
+      if (res.ok) {
+        alert(`✅ Password set successfully for ${studentName}`);
+      } else {
+        alert(`❌ Error: ${data.message}`);
+      }
+    } catch (err) {
+      alert('Server error. Try again.');
+    }
+  }
 
 init();
