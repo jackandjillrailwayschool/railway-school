@@ -553,8 +553,29 @@
         }
     }
 
+    // Function to show error messages in the red box
+function showError(msg) {
+    const errorBox = document.querySelector('.error-msg') || document.getElementById('authError');
+    if (errorBox) {
+        errorBox.innerText = msg;
+        errorBox.style.display = 'block';
+    } else {
+        // Fallback if the UI element isn't found
+        alert(msg);
+    }
+}
+
+// Function to hide error messages
+function hideError() {
+    const errorBox = document.querySelector('.error-msg') || document.getElementById('authError');
+    if (errorBox) {
+        errorBox.style.display = 'none';
+    }
+}
+
     // ── SIGN UP ────────────────────────────────────
     async function doSignup() {
+        hideError();
     // ... your code to get values ...
     try {
         const res = await fetch('/api/auth/register', {
