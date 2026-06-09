@@ -231,4 +231,45 @@ router.post('/set-student-password', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
+router.post('/student-login', async (req, res) => {
+  const { admissionNo, password } = req.body;
+  if (!admissionNo || !password)
+    return res.status(400).json({ message: 'Admission Number and password are required.' });
+  try {
+    const student = await db.Student.findOne({ where: { admissionNo: parseInt(admissionNo) } });
+    if (!student)
+      return res.status(404).json({ message: 'No student found with this Admission Number.' });
+    if (!student.password)
+      return res.status(401).json({ message: 'Password not set. Contact school admin.' });
+    const isMatch = await bcrypt.compare(password, student.password);
+    if (!isMatch)
+      return res.status(401).json({ message: 'Invalid Admission Number or password.' });
+    const token = jwt.sign(
+      { id: student.admissionNo, studentId: student.studentId, role: 'Student', name: student.name },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRES_IN || '1d' }
+    );
+    res.json({ token, student: {
+      admissionNo: student.admissionNo, studentId: student.studentId,
+      name: student.name, class: student.class, section: student.section,
+      pname: student.pname, dob: student.dob
+    }});
+  } catch (err) { res.status(500).json({ message: err.message || 'Student login failed.' }); }
+});
+
+router.post('/set-student-password', async (req, res) => {
+  const { admissionNo, newPassword } = req.body;
+  if (!admissionNo || !newPassword)
+    return res.status(400).json({ message: 'Admission Number and password are required.' });
+  if (newPassword.length < 6)
+    return res.status(400).json({ message: 'Password must be at least 6 characters.' });
+  try {
+    const student = await db.Student.findOne({ where: { admissionNo: parseInt(admissionNo) } });
+    if (!student) return res.status(404).json({ message: 'Student not found.' });
+    const passwordHash = await bcrypt.hash(newPassword, 12);
+    await student.update({ password: passwordHash });
+    res.json({ message: `Password set successfully for ${student.name}.` });
+  } catch (err) { res.status(500).json({ message: err.message }); }
+});
 module.exports = router;
