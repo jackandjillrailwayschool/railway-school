@@ -13,11 +13,18 @@
             --border:#e2e8f0; --muted:#64748b; --text:#1e293b;
             --green:#15803d; --red:#b91c1c;
         }
-        html, body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--navy); min-height: 100vh; color: var(--text); }
+        html, body { font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; color: var(--text); }
+
+        body {
+            background:
+                linear-gradient(rgba(10, 20, 50, 0.75), rgba(10, 20, 50, 0.85)),
+                /* 🔥 UPDATED: Path to your saved background.jpg 🔥 */
+                url("student.jpg") center/cover no-repeat fixed;
+        }
 
         /* ── HERO HEADER ── */
         .hero {
-            background: var(--navy);
+            background: transparent; 
             position: relative; overflow: hidden;
             text-align: center; padding: 60px 24px 40px;
             border-bottom: 1px solid rgba(200,168,75,0.15);
@@ -67,7 +74,6 @@
         .panel-title { font-family:'Playfair Display',serif; font-size:28px; color:var(--navy); margin-bottom:8px; }
         .panel-sub { font-size:14px; color:var(--muted); margin-bottom:32px; line-height:1.5; }
 
-        /* ── FORM ── */
         .field { margin-bottom: 20px; }
         .field label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--navy); margin-bottom: 8px; letter-spacing: 0.5px;}
         
@@ -81,7 +87,6 @@
 
         .pwd-toggle { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--muted); font-size: 18px; }
 
-        /* ── BUTTON ── */
         .btn-main {
             width: 100%; padding: 15px; background: var(--navy); color: var(--white);
             border: none; border-radius: 10px; font-size: 15px; font-weight: 700;
@@ -90,9 +95,9 @@
         .btn-main:hover { background: var(--blue2); transform: translateY(-1px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         .btn-main:disabled { opacity: 0.6; cursor: not-allowed; }
 
-        /* ── ERROR MSG ── */
         .msg { display: none; font-size: 13px; padding: 12px; border-radius: 8px; margin-bottom: 20px; text-align: center; border: 1px solid transparent; }
         .msg.error { display: block; background: #fef2f2; border-color: #fecaca; color: var(--red); }
+        .msg.show { display: block; }
 
         .footer-link { text-align: center; margin-top: 25px; font-size: 13px; color: var(--muted); }
         .footer-link a { color: var(--blue2); font-weight: 700; text-decoration: none; border-bottom: 1.5px solid var(--accent); }
@@ -108,8 +113,9 @@
 <body>
 
 <div class="hero">
-    <img src="https://jack-and-jill-school.onrender.com/jack2.jpeg" class="hero-logo hero-logo-left" alt="Indian Railways">
-    <img src="https://jack-and-jill-school.onrender.com/jack1.jpeg" class="hero-logo hero-logo-right" alt="School Logo">
+    <!-- 🔥 UPDATED: Relative paths for logos 🔥 -->
+    <img src="../jack2.jpeg" class="hero-logo hero-logo-left" alt="Indian Railways">
+    <img src="../jack1.jpeg" class="hero-logo hero-logo-right" alt="School Logo">
     <div class="hero-content">
         <h1>JACK & JILL EM HIGH SCHOOL</h1>
         <div class="hero-tagline">South Coast Railway · Vijayawada</div>
@@ -152,6 +158,7 @@
 </div>
 
 <script>
+    // 🔥 Keeping your Render Staff link as the API 🔥
     const API = 'https://jack-and-jill-school.onrender.com';
 
     function togglePw() {
@@ -206,7 +213,6 @@
         }
     }
 
-    // Enter key support
     document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 </script>
 
