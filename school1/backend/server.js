@@ -79,7 +79,7 @@ async function startServer() {
     console.log('Database connection established.');
 
     // 🔥 This will DELETE everything and RECREATE the correct tables one time
-    await db.sequelize.sync({ force: true }); 
+    await db.sequelize.sync(); 
     console.log('Database tables created from scratch.');
 
     await seedDefaultUsers();
