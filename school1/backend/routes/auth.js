@@ -209,27 +209,19 @@ router.post('/student-login', async (req, res) => {
 // ─────────────────────────────────────────────────────────────────
 router.post('/set-student-password', async (req, res) => {
   const { admissionNo, newPassword } = req.body;
-
-  if (!admissionNo || !newPassword) {
-    return res.status(400).json({ message: 'Admission Number and password are required.' });
-  }
-  if (newPassword.length < 6) {
-    return res.status(400).json({ message: 'Password must be at least 6 characters.' });
-  }
-
   try {
     const student = await db.Student.findOne({ where: { admissionNo: parseInt(admissionNo) } });
-    if (!student) {
-      return res.status(404).json({ message: 'Student not found.' });
-    }
+    if (!student) return res.status(404).json({ message: 'Student not found.' });
 
-    const passwordHash = await bcrypt.hash(newPassword, 12);
+    // We use bcrypt to hash the password for security
+    const salt = await bcrypt.genSalt(10);
+    const passwordHash = await bcrypt.hash(newPassword, salt);
+    
+    // Save it to the 'password' column we added to the model
     await student.update({ password: passwordHash });
 
     res.json({ message: `Password set successfully for ${student.name}.` });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+  } catch (err) { res.status(500).json({ message: err.message }); }
 });
 
 router.post('/student-login', async (req, res) => {
