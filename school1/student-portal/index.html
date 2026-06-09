@@ -4,217 +4,232 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Portal — Jack & Jill EM High School</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-            --navy:#0f1f4b; --blue:#1a3a8a; --blue2:#1e40af;
-            --accent:#c9a84c; --white:#ffffff; --off:#f5f4f0;
-            --border:#e2e8f0; --muted:#64748b; --text:#1e293b;
-            --green:#15803d; --red:#b91c1c;
+            --navy: #0a1628;
+            --navy-deep: #050b1a;
+            --gold: #c8a84b; /* Primary School Gold */
+            --gold-hover: #dfc06b;
+            --white: #ffffff;
+            --off-white: #f8fafc;
+            --text: #1e293b;
+            --muted: #64748b;
+            --error: #dc2626;
+            --radius: 20px;
         }
-        html, body { font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; color: var(--text); }
 
         body {
-            background:
-                linear-gradient(rgba(10, 20, 50, 0.75), rgba(10, 20, 50, 0.85)),
-                /* 🔥 UPDATED: Path to your saved background.jpg 🔥 */
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            /* Darker background to make the gold button pop */
+            background: 
+                linear-gradient(rgba(5, 11, 26, 0.8), rgba(5, 11, 26, 0.9)),
                 url("student.jpg") center/cover no-repeat fixed;
         }
 
-        /* ── HERO HEADER ── */
-        .hero {
-            background: transparent; 
-            position: relative; overflow: hidden;
-            text-align: center; padding: 60px 24px 40px;
-            border-bottom: 1px solid rgba(200,168,75,0.15);
-        }
-        .hero::before {
-            content:''; position:absolute; inset:0;
-            background-image: repeating-linear-gradient(45deg,rgba(255,255,255,.02) 0,rgba(255,255,255,.02) 1px,transparent 0,transparent 50%);
-            background-size:30px 30px;
+        /* ── HEADER ── */
+        header {
+            background: rgba(10, 22, 40, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 15px 40px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 1px solid rgba(200, 168, 75, 0.3);
+            position: fixed;
+            width: 100%; top: 0; z-index: 100;
         }
 
-        .hero-logo {
-            position: absolute; top: 30px; width: clamp(80px, 10vw, 130px); height: clamp(80px, 10vw, 130px);
-            border-radius: 50%; border: 3px solid var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            z-index: 10; background: white; object-fit: cover;
+        .header-logo {
+            width: 50px; height: 50px; border-radius: 50%;
+            border: 2px solid var(--gold); object-fit: cover; background: white;
         }
-        .hero-logo-left  { left: 50px; }
-        .hero-logo-right { right: 50px; }
 
-        .hero-content { position:relative; z-index:1; }
-        .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(24px, 4vw, 42px); color:var(--white); letter-spacing:1px; margin-bottom:8px; }
-        .hero-tagline { font-size:12px; font-weight:600; letter-spacing:3px; color:var(--accent); text-transform:uppercase; }
+        .header-text h1 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 20px; }
+        .header-text p { color: rgba(255,255,255,0.6); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* ── LOGIN AREA ── */
-        .main-container {
-            display: flex; justify-content: center; align-items: center; padding: 60px 20px;
-            background: radial-gradient(circle at center, #1a3a8a22 0%, transparent 70%);
+        /* ── MAIN CONTENT ── */
+        main {
+            flex: 1;
+            display: flex; align-items: center; justify-content: center;
+            padding: 120px 20px 60px;
         }
 
         .login-card {
-            background: var(--white); width: 100%; max-width: 440px;
-            border-radius: 20px; padding: 50px 40px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-            position: relative; overflow: hidden;
+            background: var(--white);
+            width: 100%; max-width: 420px;
+            border-radius: var(--radius);
+            padding: 50px 40px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+            position: relative;
         }
+
+        /* Top Gold Accent Line */
         .login-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
-            background: linear-gradient(90deg, var(--accent), #e6c96e, var(--accent));
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px;
+            background: var(--gold); border-radius: var(--radius) var(--radius) 0 0;
         }
 
         .badge {
             display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(200,168,75,0.12); color: var(--navy);
+            background: rgba(200, 168, 75, 0.15); color: #856a1b;
             padding: 6px 16px; border-radius: 30px; font-size: 11px;
-            font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px;
+            font-weight: 700; text-transform: uppercase; margin-bottom: 24px;
         }
 
-        .panel-title { font-family:'Playfair Display',serif; font-size:28px; color:var(--navy); margin-bottom:8px; }
-        .panel-sub { font-size:14px; color:var(--muted); margin-bottom:32px; line-height:1.5; }
+        .card-head h2 { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--navy); margin-bottom: 8px; }
+        .card-head p { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 30px; }
 
+        /* ── FORM ── */
         .field { margin-bottom: 20px; }
-        .field label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--navy); margin-bottom: 8px; letter-spacing: 0.5px;}
+        .field label { display: block; font-size: 11px; font-weight: 700; color: var(--navy); text-transform: uppercase; margin-bottom: 8px; }
         
-        .input-wrap { position: relative; }
         .input-wrap input {
-            width: 100%; padding: 14px 16px; border: 1.5px solid var(--border);
-            border-radius: 10px; font-size: 15px; font-family: inherit;
-            background: #f8fafc; transition: all 0.2s; outline: none;
+            width: 100%; padding: 14px 16px; border: 1.5px solid #e2e8f0;
+            border-radius: 12px; font-size: 15px; font-family: inherit;
+            background: #fcfdfe; outline: none; transition: all 0.2s;
         }
-        .input-wrap input:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(26,58,138,0.08); background: white; }
 
-        .pwd-toggle { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--muted); font-size: 18px; }
+        .input-wrap input:focus {
+            border-color: var(--gold);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(200, 168, 75, 0.1);
+        }
 
+        /* ── GOLD BUTTON ── */
         .btn-main {
-            width: 100%; padding: 15px; background: var(--navy); color: var(--white);
-            border: none; border-radius: 10px; font-size: 15px; font-weight: 700;
-            cursor: pointer; transition: all 0.2s; margin-top: 10px; letter-spacing: 0.5px;
+            width: 100%; padding: 16px;
+            background: var(--gold); /* Switched to Gold background */
+            color: var(--navy);      /* Dark text on light button */
+            border: none; border-radius: 12px;
+            font-size: 16px; font-weight: 800;
+            cursor: pointer; transition: all 0.3s ease;
+            margin-top: 10px; letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
-        .btn-main:hover { background: var(--blue2); transform: translateY(-1px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .btn-main:disabled { opacity: 0.6; cursor: not-allowed; }
 
-        .msg { display: none; font-size: 13px; padding: 12px; border-radius: 8px; margin-bottom: 20px; text-align: center; border: 1px solid transparent; }
-        .msg.error { display: block; background: #fef2f2; border-color: #fecaca; color: var(--red); }
-        .msg.show { display: block; }
+        .btn-main:hover {
+            background: var(--gold-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px rgba(200, 168, 75, 0.3);
+        }
 
-        .footer-link { text-align: center; margin-top: 25px; font-size: 13px; color: var(--muted); }
-        .footer-link a { color: var(--blue2); font-weight: 700; text-decoration: none; border-bottom: 1.5px solid var(--accent); }
+        .btn-main:active { transform: translateY(0); }
+        .btn-main:disabled { background: #d1d5db; color: #9ca3af; cursor: not-allowed; }
 
-        .page-footer { background: #07101f; text-align: center; padding: 25px; font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 0.5px; }
+        /* ── MESSAGES ── */
+        .msg { display: none; font-size: 13px; padding: 12px; border-radius: 8px; margin-bottom: 20px; text-align: center; font-weight: 600; }
+        .msg.error { display: block; background: #fff1f2; border: 1px solid #fecdd3; color: var(--error); }
 
-        @media (max-width: 860px) {
-            .hero-logo { display: none; }
+        .footer-link { text-align: center; margin-top: 30px; font-size: 13px; color: var(--muted); }
+        .footer-link a { color: var(--navy); font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--gold); padding-bottom: 2px; }
+
+        footer { text-align: center; padding: 30px; color: rgba(255,255,255,0.4); font-size: 11px; margin-top: auto; }
+
+        @media (max-width: 480px) {
+            header { padding: 10px 20px; }
             .login-card { padding: 40px 25px; }
         }
     </style>
 </head>
 <body>
 
-<div class="hero">
-    <!-- 🔥 UPDATED: Relative paths for logos 🔥 -->
-    <img src="../jack2.jpeg" class="hero-logo hero-logo-left" alt="Indian Railways">
-    <img src="../jack1.jpeg" class="hero-logo hero-logo-right" alt="School Logo">
-    <div class="hero-content">
-        <h1>JACK & JILL EM HIGH SCHOOL</h1>
-        <div class="hero-tagline">South Coast Railway · Vijayawada</div>
-    </div>
-</div>
-
-<div class="main-container">
-    <div class="login-card">
-        <div class="badge">🎓 Student Portal</div>
-        <h2 class="panel-title">Student Login</h2>
-        <p class="panel-sub">Sign in with your Admission Number to view your academic reports, marks, and fees.</p>
-
-        <div id="errorMsg" class="msg error"></div>
-
-        <div class="field">
-            <label>Admission Number</label>
-            <div class="input-wrap">
-                <input type="text" id="admissionNo" placeholder="e.g. 1001" inputmode="numeric">
-            </div>
+    <header>
+        <img src="../jack1.jpeg" class="header-logo" alt="Logo">
+        <div class="header-text">
+            <h1>JACK & JILL EM HIGH SCHOOL</h1>
+            <p>Student Portal</p>
         </div>
+    </header>
 
-        <div class="field">
-            <label>Password</label>
-            <div class="input-wrap">
-                <input type="password" id="password" placeholder="••••••••">
-                <button class="pwd-toggle" onclick="togglePw()" type="button">👁</button>
-            </div>
-        </div>
-
-        <button class="btn-main" id="loginBtn" onclick="doLogin()">Sign In to Portal</button>
-
-        <div class="footer-link">
-            Are you staff? <a href="https://jack-and-jill-school.onrender.com">Go to Staff Portal →</a>
-        </div>
-    </div>
-</div>
-
-<div class="page-footer">
-    &copy; 2026 Jack and Jill School. All rights reserved. Railway School Administration System.
-</div>
-
-<script>
-    // 🔥 Keeping your Render Staff link as the API 🔥
-    const API = 'https://jack-and-jill-school.onrender.com';
-
-    function togglePw() {
-        const p = document.getElementById('password');
-        p.type = p.type === 'password' ? 'text' : 'password';
-    }
-
-    function showError(msg) {
-        const el = document.getElementById('errorMsg');
-        el.innerText = msg;
-        el.classList.add('error');
-    }
-
-    function hideError() {
-        const el = document.getElementById('errorMsg');
-        el.classList.remove('error');
-    }
-
-    async function doLogin() {
-        hideError();
-        const adm = document.getElementById('admissionNo').value.trim();
-        const pwd = document.getElementById('password').value.trim();
-
-        if (!adm || !pwd) return showError('Please enter both Admission No and Password.');
-
-        const btn = document.getElementById('loginBtn');
-        const originalText = btn.innerText;
-        btn.innerText = 'Verifying...';
-        btn.disabled = true;
-
-        try {
-            const res = await fetch(`${API}/api/auth/student-login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ admissionNo: parseInt(adm), password: pwd })
-            });
+    <main>
+        <div class="login-card">
+            <div class="badge">🎓 Academic Access</div>
             
-            const data = await res.json();
+            <div class="card-head">
+                <h2>Student Login</h2>
+                <p>Access your marks, attendance, and fee details from the cloud database.</p>
+            </div>
 
-            if (res.ok) {
-                localStorage.setItem('studentToken', data.token);
-                localStorage.setItem('studentInfo', JSON.stringify(data.student));
-                window.location.href = 'dashboard.html';
-            } else {
-                showError(data.message || 'Invalid credentials.');
-            }
-        } catch (err) {
-            showError('Server is waking up. Please try again in 10 seconds.');
-        } finally {
-            btn.innerText = originalText;
-            btn.disabled = false;
+            <div id="errorMsg" class="msg error"></div>
+
+            <div class="field">
+                <label>Admission Number</label>
+                <div class="input-wrap">
+                    <input type="text" id="admissionNo" placeholder="e.g. 1001" inputmode="numeric">
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Your Password</label>
+                <div class="input-wrap">
+                    <input type="password" id="password" placeholder="••••••••">
+                </div>
+            </div>
+
+            <button class="btn-main" id="loginBtn" onclick="doLogin()">Log In to Portal</button>
+
+            <div class="footer-link">
+                Are you a staff member? <a href="https://jack-and-jill-school.onrender.com">Sign In here →</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>© 2026 Jack & Jill EM High School · South Coast Railway Womens Welfare Organization</footer>
+
+    <script>
+        const API = 'https://jack-and-jill-school.onrender.com';
+
+        function showError(msg) {
+            const el = document.getElementById('errorMsg');
+            el.innerText = msg;
+            el.style.display = 'block';
         }
-    }
 
-    document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
-</script>
+        function hideError() {
+            document.getElementById('errorMsg').style.display = 'none';
+        }
 
+        async function doLogin() {
+            hideError();
+            const adm = document.getElementById('admissionNo').value.trim();
+            const pwd = document.getElementById('password').value.trim();
+
+            if (!adm || !pwd) return showError('Missing credentials.');
+
+            const btn = document.getElementById('loginBtn');
+            const originalText = btn.innerText;
+            btn.innerText = 'Verifying...';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch(`${API}/api/auth/student-login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ admissionNo: parseInt(adm), password: pwd })
+                });
+                
+                const data = await res.json();
+
+                if (res.ok) {
+                    localStorage.setItem('studentToken', data.token);
+                    localStorage.setItem('studentInfo', JSON.stringify(data.student));
+                    window.location.href = 'dashboard.html';
+                } else {
+                    showError(data.message || 'Login failed.');
+                }
+            } catch (err) {
+                showError('Connection timeout. Please retry in 5 seconds.');
+            } finally {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+    </script>
 </body>
 </html>
