@@ -24,6 +24,7 @@ router.post('/login', async (req, res) => {
 });
 
 // 2. Staff Registration
+// 2. Staff Registration (Auto-Login version)
 router.post('/register', async (req, res) => {
   const { name, email, password, role } = req.body;
   try {
@@ -32,7 +33,19 @@ router.post('/register', async (req, res) => {
 
     const passwordHash = await bcrypt.hash(password, 12);
     const user = await db.User.create({ name, email, passwordHash, role });
-    res.status(201).json({ message: 'Account created successfully.' });
+
+    // Generate token so they don't have to log in manually after signup
+    const token = jwt.sign(
+      { id: user.id, email: user.email, role: user.role, name: user.name },
+      process.env.JWT_SECRET,
+      { expiresIn: '1d' }
+    );
+
+    res.status(201).json({ 
+        message: 'Account created!', 
+        token, 
+        user: { id: user.id, email: user.email, role: user.role, name: user.name } 
+    });
   } catch (error) { res.status(500).json({ message: error.message }); }
 });
 

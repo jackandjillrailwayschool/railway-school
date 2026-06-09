@@ -555,46 +555,30 @@
 
     // ── SIGN UP ────────────────────────────────────
     async function doSignup() {
-        const name      = document.getElementById('signup-name').value.trim();
-        const email     = document.getElementById('signup-email').value.trim();
-        const role      = document.getElementById('signup-role').value;
-        const password  = document.getElementById('signup-pwd').value;
-        const password2 = document.getElementById('signup-pwd2').value;
-        clearMsg('signup-err'); clearMsg('signup-ok');
-        if (!name || !email || !role || !password || !password2) {
-            showMsg('signup-err', 'Please fill in all fields.', 'error'); return;
-        }
-        if (password !== password2) {
-            showMsg('signup-err', 'Passwords do not match.', 'error'); return;
-        }
-        if (password.length < 6) {
-            showMsg('signup-err', 'Password must be at least 6 characters.', 'error'); return;
-        }
-        setBtn('signup-btn', 'Creating account…', true);
-        try {
-            const res  = await fetch(API + '/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, password, role })
-            });
-            const data = await res.json();
-            if (!res.ok) {
-                showMsg('signup-err', data.message || 'Registration failed.', 'error');
-                setBtn('signup-btn', 'Create Account', false); return;
-            }
-            localStorage.setItem('authToken', data.token);
-            localStorage.setItem('userRole',  data.user.role);
-            localStorage.setItem('userName',  data.user.name || data.user.email);
-            showMsg('signup-ok', 'Account created! Redirecting to dashboard…', 'success');
-            setTimeout(() => {
-                window.location.href = data.user.role === 'Accountant' ? 'fees.html' : 'dashboard.html';
-            }, 1200);
-        } catch(err) {
-            showMsg('signup-err', 'Connection error. Make sure the server is running.', 'error');
-            setBtn('signup-btn', 'Create Account', false);
-        }
-    }
+    // ... your code to get values ...
+    try {
+        const res = await fetch('/api/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await res.json();
 
+        if (res.ok) {
+            // SUCCESS: Save token and go to dashboard
+            localStorage.setItem('authToken', data.token);
+            localStorage.setItem('userRole', data.user.role);
+            localStorage.setItem('userName', data.user.name);
+            window.location.href = 'dashboard.html'; 
+        } else {
+            showError(data.message || 'Signup failed');
+        }
+    } catch (err) {
+        // If it was just a timeout, they might already be created.
+        // Tell them to try logging in instead.
+        showError('Server is waking up. If this is your second try, please just Sign In.');
+    }
+}
     // ── FORGOT PASSWORD ────────────────────────────
     async function doForgot() {
         const email           = document.getElementById('forgot-email').value.trim();
