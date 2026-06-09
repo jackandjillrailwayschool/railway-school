@@ -9,37 +9,21 @@ module.exports = (sequelize) => {
     motherTongue: { type: DataTypes.STRING, allowNull: true },
     dob: { type: DataTypes.DATEONLY, allowNull: true },
     placeOfBirth: { type: DataTypes.STRING, allowNull: true },
-    nationality:        { type: DataTypes.STRING, allowNull: true },
-    religionCaste:      { type: DataTypes.STRING, allowNull: true },
+    nationality: { type: DataTypes.STRING, allowNull: true },
+    religionCaste: { type: DataTypes.STRING, allowNull: true },
     aadhaarStudent: { type: DataTypes.STRING, allowNull: true },
     bloodStudent: { type: DataTypes.STRING, allowNull: true },
     pname: { type: DataTypes.STRING, allowNull: true },
     parentMob: { type: DataTypes.STRING, allowNull: true },
     occupation: { type: DataTypes.STRING, allowNull: true },
-    motherAadhaar:      { type: DataTypes.STRING, allowNull: true },
-fatherAadhaar:      { type: DataTypes.STRING, allowNull: true },
+    motherAadhaar: { type: DataTypes.STRING, allowNull: true },
+    fatherAadhaar: { type: DataTypes.STRING, allowNull: true },
     isRailwayEmployee: { type: DataTypes.STRING, allowNull: true },
     addr: { type: DataTypes.TEXT, allowNull: true },
     guardianName: { type: DataTypes.STRING, allowNull: true },
     guardianAddress: { type: DataTypes.TEXT, allowNull: true },
     guardianOccupation: { type: DataTypes.STRING, allowNull: true },
     lastClass: { type: DataTypes.STRING, allowNull: true },
-    nationality: {
-  type: DataTypes.STRING,
-  allowNull: true,
-},
-religionCaste: {
-  type: DataTypes.STRING,
-  allowNull: true,
-},
-motherAadhaar: {
-  type: DataTypes.STRING,
-  allowNull: true,
-},
-fatherAadhaar: {
-  type: DataTypes.STRING,
-  allowNull: true,
-},
     prevSchool: { type: DataTypes.STRING, allowNull: true },
     tcDate: { type: DataTypes.DATEONLY, allowNull: true },
     medium: { type: DataTypes.STRING, allowNull: true },
@@ -51,6 +35,10 @@ fatherAadhaar: {
     class: { type: DataTypes.STRING, allowNull: false },
     section: { type: DataTypes.STRING, allowNull: false },
     rem: { type: DataTypes.TEXT, allowNull: true },
-    jDate: { type: DataTypes.DATEONLY, allowNull: true }
+    jDate: { type: DataTypes.DATEONLY, allowNull: true },
+    
+    // 🔥 THIS IS THE CRITICAL MISSING LINE 🔥
+    password: { type: DataTypes.STRING, allowNull: true }
+
   }, { tableName: 'students' });
 };
