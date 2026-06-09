@@ -276,31 +276,10 @@
   <footer>© 2025 Jack &amp; Jill EM High School · South Coast Railway Womens Welfare Organization</footer>
 
   <script>
+    
+    
+    // This MUST point to your STAFF portal link because that's where the database is
     const API = 'https://jack-and-jill-school.onrender.com';
-
-    // Already logged in? Skip to dashboard
-    if (localStorage.getItem('studentToken')) {
-      window.location.href = 'dashboard.html';
-    }
-
-    function togglePw() {
-      const inp = document.getElementById('password');
-      inp.type = inp.type === 'password' ? 'text' : 'password';
-    }
-
-    // Allow Enter key to submit
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Enter') doLogin();
-    });
-
-    function showError(msg) {
-      const el = document.getElementById('errorMsg');
-      el.textContent = msg;
-      el.classList.add('show');
-    }
-    function hideError() {
-      document.getElementById('errorMsg').classList.remove('show');
-    }
 
     async function doLogin() {
       hideError();
@@ -317,11 +296,13 @@
       btn.disabled = true;
 
       try {
+        // 🔥 Updated the fetch URL to include /api/auth
         const res  = await fetch(`${API}/api/auth/student-login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ admissionNo: parseInt(admissionNo), password })
         });
+        
         const data = await res.json();
 
         if (res.ok && data.token) {
@@ -332,12 +313,14 @@
           showError(data.message || 'Login failed. Please check your credentials.');
         }
       } catch (err) {
-        showError('Cannot reach the server. Please try again.');
+        console.error("Login Fetch Error:", err);
+        showError('Cannot reach the server. Make sure the Staff portal is running.');
       } finally {
         btn.classList.remove('loading');
         btn.disabled = false;
       }
     }
+  
   </script>
 </body>
 </html>

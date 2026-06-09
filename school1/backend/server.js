@@ -20,8 +20,10 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
+// Allow both local testing and your specific student portal link
 app.use(cors({
   origin: ['https://jjschool-students.onrender.com', 'http://localhost:5000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
 app.use(express.json());
