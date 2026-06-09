@@ -277,8 +277,7 @@
 
   <script>
     
-    
-    // This MUST point to your STAFF portal link because that's where the database is
+    // 1. This MUST be the link to your STAFF backend
     const API = 'https://jack-and-jill-school.onrender.com';
 
     async function doLogin() {
@@ -296,9 +295,10 @@
       btn.disabled = true;
 
       try {
-        // 🔥 Updated the fetch URL to include /api/auth
+        // 2. We add 'mode: cors' to ensure the browser allows the request
         const res  = await fetch(`${API}/api/auth/student-login`, {
           method: 'POST',
+          mode: 'cors', 
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ admissionNo: parseInt(admissionNo), password })
         });
@@ -313,14 +313,14 @@
           showError(data.message || 'Login failed. Please check your credentials.');
         }
       } catch (err) {
-        console.error("Login Fetch Error:", err);
-        showError('Cannot reach the server. Make sure the Staff portal is running.');
+        console.error("Login Error:", err);
+        showError('Server is waking up. Please wait 10 seconds and try again.');
       } finally {
         btn.classList.remove('loading');
         btn.disabled = false;
       }
     }
-  
+
   </script>
 </body>
 </html>
