@@ -12,7 +12,10 @@ const studentRoutes = require('./routes/students');
 const markRoutes = require('./routes/marks');
 const feeRoutes = require('./routes/fees');
 const attendanceRoutes = require('./routes/attendance');
-const studentPortalRoutes = require('./routes/studentPortal');
+
+// 🔥 FIX: Matches the lowercase filename we just set
+const studentPortalRoutes = require('./routes/studentportal');
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -23,13 +26,16 @@ app.use(express.urlencoded({ extended: true }));
 
 // API Routes
 app.use('/api/remarks', remarkRoutes);
-app.use('/api/auth', authRoutes); // Student login is handled here!
+app.use('/api/auth', authRoutes);
 app.use('/api/students', studentRoutes);
 app.use('/api/marks', markRoutes);
 app.use('/api/fees', feeRoutes);
 app.use('/api/attendance', attendanceRoutes);
+
+// 🔥 API for Student Dashboard
 app.use('/api/student-portal', studentPortalRoutes);
-// --- FRONTEND INTEGRATION (ONE LINK SETUP) ---
+
+// --- FRONTEND INTEGRATION ---
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
 app.get('/', (req, res) => {
@@ -55,7 +61,6 @@ async function seedDefaultUsers() {
     { email: 'teacher@school.com', password: 'teacher123', role: 'Teacher', name: 'Class Teacher' },
     { email: 'accountant@school.com', password: 'accountant123', role: 'Accountant', name: 'School Accountant' }
   ];
-
   for (const user of users) {
     try {
       const existing = await db.User.findOne({ where: { email: user.email } });
@@ -67,26 +72,21 @@ async function seedDefaultUsers() {
           name: user.name
         });
       }
-    } catch (e) {
-      console.log(`Note: User ${user.email} verified.`);
-    }
+    } catch (e) { console.log("User verified."); }
   }
 }
 
 async function startServer() {
   try {
-    // 1. Just connect, don't try to change the structure
     await db.sequelize.authenticate();
     console.log('Database connection established.');
 
-    // 2. We skip sync to avoid the "UNIQUE KEY" error on Render
-    console.log('Database sync skipped (Structure is handled manually).');
+    // We skip sync for now to avoid the constraint error you had earlier
+    console.log('Database sync skipped.');
 
-    // 3. Verify Default Users (Staff login)
     await seedDefaultUsers();
     console.log('Default users verified.');
 
-    // 4. Start the server
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
