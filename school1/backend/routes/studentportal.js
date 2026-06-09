@@ -40,11 +40,18 @@ router.get('/my-attendance', async (req, res) => {
 });
 
 // 4. Get My Fees
+// 4. Get My Fees
 router.get('/my-fees', async (req, res) => {
   try {
-    const fees = await Fee.findAll({ where: { reg: req.user.id } });
+    // We change 'reg' to 'studentReg' to match your database column
+    const fees = await Fee.findAll({ 
+      where: { studentReg: req.user.id } 
+    });
     res.json(fees);
-  } catch (e) { res.status(500).json({ message: e.message }); }
+  } catch (e) { 
+    console.error("Fee Fetch Error:", e);
+    res.status(500).json({ message: e.message }); 
+  }
 });
 
 module.exports = router;
