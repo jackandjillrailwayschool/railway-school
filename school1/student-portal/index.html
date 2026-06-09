@@ -317,7 +317,7 @@
       btn.disabled = true;
 
       try {
-        const res  = await fetch(`${API}/api/auth/student-login`, {
+        const res  = await fetch(`${API}/api/student-portal/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ admissionNo: parseInt(admissionNo), password })

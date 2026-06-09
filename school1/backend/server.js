@@ -12,7 +12,6 @@ const studentRoutes = require('./routes/students');
 const markRoutes = require('./routes/marks');
 const feeRoutes = require('./routes/fees');
 const attendanceRoutes = require('./routes/attendance');
-const studentPortalRoutes = require('./routes/studentPortal');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,12 +23,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // API Routes
 app.use('/api/remarks', remarkRoutes);
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes); // Student login is handled here!
 app.use('/api/students', studentRoutes);
 app.use('/api/marks', markRoutes);
 app.use('/api/fees', feeRoutes);
 app.use('/api/attendance', attendanceRoutes);
-app.use('/api/student-portal', studentPortalRoutes);
 
 // --- FRONTEND INTEGRATION (ONE LINK SETUP) ---
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
@@ -80,7 +78,7 @@ async function startServer() {
     await db.sequelize.authenticate();
     console.log('Database connection established.');
 
-    // 🔥 CHANGED THIS LINE TO ALLOW COLUMN UPDATES 🔥
+    // This creates the missing columns (like password) in TiDB automatically
     await db.sequelize.sync({ alter: true }); 
     console.log('Database schema synchronized.');
 
