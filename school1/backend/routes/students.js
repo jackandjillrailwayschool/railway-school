@@ -67,10 +67,22 @@ router.post('/', async (req, res) => {
 
   try {
     // Check duplicate by both admissionNo and studentId
-    const existsById = await Student.findOne({ where: { studentId: payload.studentId } });
-    if (existsById) {
-      return res.status(409).json({ message: `Roll No "${payload.studentId}" already exists` });
-    }
+    // Check duplicate studentId
+const idExists = await Student.findOne({ where: { studentId: payload.studentId } });
+if (idExists) {
+    return res.status(409).json({ message: `Student ID "${payload.studentId}" already exists` });
+}
+
+// Check duplicate roll number ONLY within the same class
+const rollExists = await Student.findOne({ 
+    where: { 
+        reg: payload.reg, 
+        class: payload.class 
+    } 
+});
+if (rollExists) {
+    return res.status(409).json({ message: `Roll No "${payload.reg}" already exists in Class ${payload.class}` });
+}
     const existsByAdm = await Student.findOne({ where: { admissionNo: payload.admissionNo } });
     if (existsByAdm) {
       return res.status(409).json({ message: `Admission No "${payload.admissionNo}" already exists` });
