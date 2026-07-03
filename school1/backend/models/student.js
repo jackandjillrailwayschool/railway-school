@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   return sequelize.define('Student', {
     admissionNo: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    studentId: { type: DataTypes.STRING, unique: true, allowNull: false },
+    studentId: { type: DataTypes.STRING, allowNull: false },
     reg: { type: DataTypes.STRING, allowNull: true },
     name: { type: DataTypes.STRING, allowNull: false },
     motherTongue: { type: DataTypes.STRING, allowNull: true },
