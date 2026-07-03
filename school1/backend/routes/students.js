@@ -87,10 +87,11 @@ router.post('/', async (req, res) => {
 
     const student = await Student.create(payload);
     res.status(201).json(student);
-  } catch (error) {
+ } catch (error) {
     console.error('Create student error:', error);
-    res.status(500).json({ message: error.message || 'Failed to create student' });
-  }
+    const detail = error.errors ? error.errors.map(e => `${e.path}: ${e.message}`).join('; ') : error.message;
+    res.status(500).json({ message: detail || 'Failed to create student' });
+}
 });
 
 router.put('/:studentId', async (req, res) => {
